@@ -59,6 +59,7 @@
     "use-algolia": "^1.3.0",
     "use-debounce": "^3.3.0",
     "use-persisted-state": "^0.3.0",
+    "use-socketio": "^2.0.3",
     "yarn": "^1.19.0",
     "yup": "^0.27.0"
   },

@@ -9,6 +9,7 @@ import SideDrawer from "components/SideDrawer";
 
 import { FireTableFilter } from "hooks/useFiretable";
 import useRouter from "hooks/useRouter";
+import { SocketIOProvider } from "use-socketio";
 
 export default function TableView() {
   const router = useRouter();
@@ -25,15 +26,20 @@ export default function TableView() {
 
   return (
     <Navigation tableCollection={tableCollection}>
-      <Table
-        key={tableCollection}
-        collection={tableCollection}
-        filters={filters}
-      />
-
-      <Hidden smDown>
-        <SideDrawer />
-      </Hidden>
+      <SocketIOProvider
+        //url="https://taff-events.uc.r.appspot.com"
+        url="http://localhost:8080"
+        opts={{}}
+      >
+        <Table
+          key={tableCollection}
+          collection={tableCollection}
+          filters={filters}
+        />
+        <Hidden smDown>
+          <SideDrawer />
+        </Hidden>
+      </SocketIOProvider>
     </Navigation>
   );
 }

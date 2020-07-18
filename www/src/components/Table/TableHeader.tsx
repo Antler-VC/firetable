@@ -19,7 +19,7 @@ import { DRAWER_COLLAPSED_WIDTH } from "components/SideDrawer";
 import { useFiretableContext } from "contexts/firetableContext";
 import { FieldType } from "constants/fields";
 import MigrateButton from "./MigrateButton";
-
+import TableUsers from "./TableUsers";
 export const TABLE_HEADER_HEIGHT = 56;
 
 const useStyles = makeStyles(theme =>
@@ -149,6 +149,10 @@ export default function TableHeader({
       </Grid>
 
       <Grid item />
+
+      <Grid item>
+        <TableUsers />
+      </Grid>
 
       <Grid item>
         <ImportCSV />
