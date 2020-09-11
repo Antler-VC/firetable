@@ -78,6 +78,7 @@ const App: React.FC = () => {
                       routes.tableWithId,
                       routes.tableGroupWithId,
                       routes.gridWithId,
+                      routes.subTable,
                     ]}
                     render={() => (
                       <FiretableContextProvider>
@@ -89,6 +90,10 @@ const App: React.FC = () => {
                           />
                           <PrivateRoute
                             path={routes.tableWithId}
+                            render={() => <TableView />}
+                          />
+                          <PrivateRoute
+                            path={routes.subTable}
                             render={() => <TableView />}
                           />
                           <PrivateRoute

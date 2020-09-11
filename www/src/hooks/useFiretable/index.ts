@@ -13,7 +13,6 @@ export type FiretableActions = {
   };
   row: { add: Function; delete: Function; more: Function };
   table: {
-    set: Function;
     filter: Function;
     updateConfig: Function;
     orderBy: Function;
@@ -42,20 +41,9 @@ const useFiretable = (
   filters?: FireTableFilter[],
   orderBy?: FiretableOrderBy
 ) => {
-  const [tableConfig, configActions] = useTableConfig(collectionName);
-  const [tableState, tableActions] = useTable({
-    path: collectionName,
-    filters,
-    orderBy,
-  });
+  const [tableConfig, configActions] = useTableConfig();
+  const [tableState, tableActions] = useTable();
 
-  /** set collection path of table */
-  const setTable = (collectionName: string, filters: FireTableFilter[]) => {
-    if (collectionName !== tableState.path || filters !== tableState.filters) {
-      configActions.setTable(collectionName);
-      tableActions.setTable(collectionName, filters);
-    }
-  };
   const filterTable = (filters: FireTableFilter[]) => {
     tableActions.dispatch({ filters });
   };
@@ -93,7 +81,6 @@ const useFiretable = (
     },
     table: {
       updateConfig: configActions.updateConfig,
-      set: setTable,
       orderBy: setOrder,
       filter: filterTable,
     },

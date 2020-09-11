@@ -25,6 +25,21 @@ export const arrayMover = (
   return arr; // for testing purposes
 };
 
+/**
+ * splits an array into specific sized arrays
+ * @param array array
+ * @param chunckSize size of the child arrays
+ */
+export const arraySplitter = (array, chunckSize) =>
+  array.reduce((resultArray, item, index) => {
+    const chunkIndex = Math.floor(index / chunckSize);
+    if (!resultArray[chunkIndex]) {
+      resultArray[chunkIndex] = []; // start a new chunk
+    }
+    resultArray[chunkIndex].push(item);
+    return resultArray;
+  }, []);
+
 export const sanitiseCallableName = (name: string) => {
   if (!name || typeof name !== "string") return "";
   return name
@@ -58,6 +73,16 @@ export const isCollectionGroup = () => {
   const pathName = window.location.pathname.split("/")[1];
   return pathName === "tableGroup";
 };
+
+// export const isArrayTable = () => {
+//   const pathName = window.location.pathname.split("/")[1];
+//   return pathName === "tableGroup";
+// };
+// export const isArrayTable = () => {
+//   const pathName = window.location.pathname.split("/")[1];
+//   return pathName === "tableGroup";
+// };
+
 var characters =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 export function makeId(length) {

@@ -7,16 +7,8 @@ import _sortBy from "lodash/sortBy";
 
 import useDoc, { DocActions } from "../useDoc";
 import { FieldType } from "constants/fields";
-import { arrayMover, isCollectionGroup } from "../../util/fns";
+import { arrayMover, isCollectionGroup, arraySplitter } from "../../util/fns";
 import { db, deleteField } from "../../firebase";
-
-const formatPathRegex = /\/[^\/]+\/([^\/]+)/g;
-
-const formatPath = (tablePath: string) => {
-  return `_FIRETABLE_/settings/${
-    isCollectionGroup() ? "groupSchema" : "schema"
-  }/${tablePath.replace(formatPathRegex, "/subTables/$1")}`;
-};
 
 export type ColumnConfig = {
   fieldName: string;
@@ -30,10 +22,14 @@ export type ColumnConfig = {
   [key: string]: any;
 };
 
-const useTableConfig = (tablePath?: string) => {
-  const [tableConfigState, documentDispatch] = useDoc({
-    path: tablePath ? formatPath(tablePath) : "",
-  });
+const configDocPath = (items) =>
+  arraySplitter(items, 2)
+    .filter((v, i) => i % 2)
+    .reduce((acc, curr) => [...acc, ...curr], [items[0]])
+    .join("/");
+
+const useTableConfig = () => {
+  const [tableConfigState, documentDispatch] = useDoc({});
 
   useEffect(() => {
     const { doc, columns } = tableConfigState;
@@ -44,14 +40,24 @@ const useTableConfig = (tablePath?: string) => {
   /**  used for specifying the table in use
    *  @param table firestore collection path
    */
-  const setTable = (table: string) => {
+
+  const pathName = window.location.pathname;
+
+  useEffect(() => {
+    //
+    const schemaDocPath = `_FIRETABLE_/settings/schema/${configDocPath(
+      pathName.replace("/table/", "").split("/")
+    )}`;
+    console.log(schemaDocPath);
     documentDispatch({
-      path: formatPath(table),
-      columns: [],
+      path: schemaDocPath,
       doc: null,
-      ref: db.doc(formatPath(table)),
+      ref: db.doc(schemaDocPath),
       loading: true,
     });
+  }, [pathName]);
+  const setTable = (table: string) => {
+    //console.log(table);
   };
   /**  used for creating a new column
    *  @param name of column.
