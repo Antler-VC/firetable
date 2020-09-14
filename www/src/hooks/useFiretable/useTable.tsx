@@ -11,14 +11,14 @@ const useTable = () => {
 
   const pathName = window.location.pathname;
   useEffect(() => {
-    const collectionPath = collectionPathFormatter(pathName);
-
-    tableActions.dispatch({
-      path: collectionPath,
-      rows: [],
-      orderBy: [],
-    });
-
+    if (pathName.includes("table")) {
+      const collectionPath = collectionPathFormatter(pathName);
+      tableActions.dispatch({
+        path: collectionPath,
+        rows: [],
+        orderBy: [],
+      });
+    }
     // if (filters) tableActions.dispatch({ filters });
   }, [pathName]);
 

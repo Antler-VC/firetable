@@ -45,16 +45,19 @@ const useTableConfig = () => {
 
   useEffect(() => {
     //
-    const schemaDocPath = `_FIRETABLE_/settings/schema/${configDocPath(
-      pathName.replace("/table/", "").split("/")
-    )}`;
-    console.log(schemaDocPath);
-    documentDispatch({
-      path: schemaDocPath,
-      doc: null,
-      ref: db.doc(schemaDocPath),
-      loading: true,
-    });
+    if (pathName.includes("table")) {
+      const schemaDocPath = `_FIRETABLE_/settings/schema/${configDocPath(
+        pathName.replace("/table/", "").split("/")
+      )}`;
+      console.log(schemaDocPath);
+      documentDispatch({
+        path: schemaDocPath,
+        doc: null,
+        ref: db.doc(schemaDocPath),
+        loading: true,
+      });
+    } else {
+    }
   }, [pathName]);
   const setTable = (table: string) => {
     //console.log(table);
