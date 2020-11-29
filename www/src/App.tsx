@@ -16,7 +16,7 @@ import ConfirmationProvider from "components/ConfirmationDialog/Provider";
 import { AppProvider } from "contexts/AppContext";
 import { FiretableContextProvider } from "contexts/FiretableContext";
 import routes from "constants/routes";
-
+import PerformanceProvider from 'components/Performance/Provider'
 import AuthView from "pages/Auth/GoogleAuth";
 import SignOutView from "pages/Auth/SignOut";
 
@@ -43,6 +43,7 @@ export default function App() {
   return (
     <>
       <ErrorBoundary>
+        <PerformanceProvider>
         <AppProvider>
           <ConfirmationProvider>
             <SnackProvider>
@@ -124,6 +125,7 @@ export default function App() {
             </SnackProvider>
           </ConfirmationProvider>
         </AppProvider>
+        </PerformanceProvider>
       </ErrorBoundary>
     </>
   );

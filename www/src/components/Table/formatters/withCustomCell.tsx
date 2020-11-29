@@ -3,7 +3,7 @@ import { FormatterProps } from "react-data-grid";
 
 // import { makeStyles, createStyles } from "@material-ui/core";
 import { Link } from "@material-ui/core";
-
+import Profiler from 'components/Performance/Profiler'; 
 import ErrorBoundary from "components/ErrorBoundary";
 import { useFiretableContext } from "contexts/FiretableContext";
 
@@ -104,12 +104,14 @@ const withCustomCell = (
       setComponent(
         <ErrorBoundary fullScreen={false} basic wrap="nowrap">
           <Suspense fallback={basicCell}>
+            <Profiler phase="update" id={`${value === undefined? 'EMPTY-':''}${(props.column as any).type}`}>
             <Component
               {...props}
               docRef={props.row.ref}
               value={localValue}
               onSubmit={handleSubmit}
             />
+            </Profiler>
           </Suspense>
         </ErrorBoundary>
       );

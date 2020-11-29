@@ -146,8 +146,6 @@ export default function BulkActions({ selectedRows, columns, clearSelection }) {
   const executeAction = async (key: string, actionType: string) => {
     const actionColumn = _find(actionColumns, { key });
     if (!actionColumn) return;
-
-    console.log({ actionColumn, selectedRows, actionType });
     const callableName = actionColumn.config.callableName ?? "actionScript";
 
     const calls = selectedRows.map((row) => {
