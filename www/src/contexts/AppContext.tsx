@@ -10,7 +10,7 @@ import {
   ThemeOptions,
   CssBaseline,
 } from "@material-ui/core";
-import Themes from "Themes";
+import Themes from "Theme/Themes";
 
 import ErrorBoundary from "components/ErrorBoundary";
 
