@@ -80,6 +80,25 @@ export const generateConfigFromTableSchema = async (
     ""
   )}]`;
 
+  const actionColumns = Object.values(schemaData.columns).filter(
+    (col: any) => col.type === "ACTION" && col.config?.isActionScript
+  );
+  const actionScriptsConfig = `{${actionColumns.reduce(
+    (acc, currColumn: any) => {
+      return `${acc} ${
+        currColumn.key
+      }:{\nrequiredFields:[${currColumn.config.requiredFields
+        .map((fieldKey: string) => `"${fieldKey}"`)
+        .join(",\n")}],
+        \nrequiredRoles:[${currColumn.config.requiredRoles
+          .map((fieldKey: string) => `"${fieldKey}"`)
+          .join(",\n")}],
+        \nscript:({row,auth,db,ref,actionParams})=>{${currColumn.config.script}}
+        },\n`;
+    },
+    ""
+  )}}`;
+
   const sparksConfig = parseSparksConfig(schemaData.sparks, user);
 
   const collectionType = schemaDocPath.includes("subTables")
@@ -139,6 +158,7 @@ export const generateConfigFromTableSchema = async (
     initializeConfig,
     documentSelectConfig,
     sparksConfig,
+    actionScriptsConfig,
   };
 
   const fileData = Object.keys(exports).reduce((acc, currKey) => {

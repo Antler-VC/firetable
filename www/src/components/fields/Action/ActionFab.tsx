@@ -62,29 +62,31 @@ export default function ActionFab({
   const [isRunning, setIsRunning] = useState(false);
   const snack = useContext(SnackContext);
 
-  const callableName: string =
-    (column as any).callableName ?? config.callableName ?? "actionScript";
+  // const callableName: string =
+  //   (column as any).callableName ?? config.callableName ?? "actionScript";
+  const callableName = `FT-${tableState?.tablePath}_onCall`;
   const handleRun = (actionParams = null) => {
     setIsRunning(true);
 
     const data = {
-      ref: { path: ref.path, id: ref.id, tablePath: window.location.pathname },
-      column: { ...column, editor: undefined },
+      rowPaths: [ref.path],
+      actionKey: column.key,
       action,
-      schemaDocPath: formatPath(tableState?.tablePath ?? ""),
+      type: "action",
       actionParams,
     };
     cloudFunction(
       callableName,
       data,
       (response) => {
-        const { message, cellValue, success } = response.data;
+        console.log(response.data);
+        const { message, success } = response.data[0];
         setIsRunning(false);
         snack.open({
           message: JSON.stringify(message),
           variant: success ? "success" : "error",
         });
-        if (cellValue && cellValue.status) onSubmit(cellValue);
+        //if (cellValue && cellValue.status) onSubmit(cellValue);
       },
       (error) => {
         console.error("ERROR", callableName, error);
