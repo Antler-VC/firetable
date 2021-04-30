@@ -1,13 +1,14 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+import * as admin from "firebase-admin";
+admin.initializeApp();
 import { asyncExecute } from "./compiler/terminal";
 import generateConfig from "./compiler";
 import { auth } from "./firebaseConfig";
 import meta from "./package.json";
 import { commandErrorHandler, logErrorToDB } from "./utils";
 import firebase from "firebase-admin";
-
 const app = express();
 const jsonParser = bodyParser.json();
 

@@ -1,6 +1,14 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+import * as admin from "firebase-admin";
+
+const projectId = "antler-vc";
+console.log(`Running on ${projectId}`);
+var serviceAccount = require(`./${projectId}-firebase.json`);
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: `https://${projectId}.firebaseio.com`,
+  storageBucket: `${projectId}.appspot.com`,
+});
+
 import { asyncExecute } from "./compiler/terminal";
 import generateConfig from "./compiler";
 import { auth } from "./firebaseConfig";
