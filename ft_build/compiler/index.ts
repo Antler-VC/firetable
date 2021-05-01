@@ -56,7 +56,6 @@ export default async function generateConfig(
           return false;
         }
       }
-
       return true;
     }
   );

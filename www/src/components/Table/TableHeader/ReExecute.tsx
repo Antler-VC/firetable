@@ -16,7 +16,7 @@ import _sortBy from "lodash/sortBy";
 import { makeStyles, createStyles, DialogContentText } from "@material-ui/core";
 
 import Modal from "components/Modal";
-
+import { FieldType } from "constants/fields";
 const useStyles = makeStyles((theme) =>
   createStyles({
     paper: {
@@ -54,6 +54,10 @@ export default function ReExecute() {
     setUpdating(false);
     setTimeout(() => setOpen(false), 3000); // give time to for ft function to run
   };
+  const derivativeColumns = Object.values(tableState?.columns ?? {}).filter(
+    (col) => FieldType.derivative === col.type
+  );
+  //console.log(derivativeColumns)
 
   return (
     <>

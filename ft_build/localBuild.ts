@@ -8,15 +8,11 @@ admin.initializeApp({
   databaseURL: `https://${projectId}.firebaseio.com`,
   storageBucket: `${projectId}.appspot.com`,
 });
-
 import { asyncExecute } from "./compiler/terminal";
 import generateConfig from "./compiler";
-import { auth } from "./firebaseConfig";
-import meta from "./package.json";
-import { commandErrorHandler, logErrorToDB } from "./utils";
 import firebase from "firebase-admin";
 
-const main = async (projectId, configPath) => {
+const main = async (configPath) => {
   console.log("configPath:", configPath);
 
   let user: firebase.auth.UserRecord;
@@ -42,4 +38,4 @@ const main = async (projectId, configPath) => {
   // console.log("build complete");
 };
 
-main("antler-vc", "/_FIRETABLE_/settings/schema/test");
+main("/_FIRETABLE_/settings/schema/founders");
