@@ -93,7 +93,7 @@ export const generateConfigFromTableSchema = async (
         \nrequiredRoles:[${currColumn.config.requiredRoles
           .map((fieldKey: string) => `"${fieldKey}"`)
           .join(",\n")}],
-        \nscript:({row,auth,db,ref,actionParams})=>{${currColumn.config.script}}
+        \nscript:async({row,auth,db,ref,actionParams})=>{${currColumn.config.script}}
         },\n`;
     },
     ""
