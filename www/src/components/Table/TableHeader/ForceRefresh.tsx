@@ -45,12 +45,16 @@ export default function TableSettings() {
     setUpdating(true);
     const _ft_forcedUpdateAt = new Date();
 
-    const batch = db.batch();
     const querySnapshot = await query.get();
-    querySnapshot.docs.forEach((doc) => {
-      batch.update(doc.ref, { _ft_forcedUpdateAt });
-    });
-    await batch.commit();
+    const docs = [...querySnapshot.docs];
+    while (docs.length) {
+      const batch = db.batch();
+      const temp = docs.splice(0, 499);
+      temp.forEach((doc) => {
+        batch.update(doc.ref, { _ft_forcedUpdateAt });
+      });
+      await batch.commit();
+    }
     setUpdating(false);
     setOpen(false);
   };
