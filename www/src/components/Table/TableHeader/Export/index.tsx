@@ -83,7 +83,7 @@ export default function Export() {
         _query = _query.orderBy(orderBy.key, orderBy.direction);
       });
     }
-    return _query.limit(1000000);
+    return _query.limit(10000);
   }, [tableState?.tablePath, tableState?.orderBy, tableState?.filters]);
 
   const handleClose = () => {
